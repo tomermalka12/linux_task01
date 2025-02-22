@@ -22,10 +22,10 @@ function install_software(){
 		status_code=$?
 		sleep 3
 		if [ $status_code -ne 0 ]; then
-			echo "$i faild to install (exit code: $?)"
+			echo "$i failed to install (exit code: $?)"
 			sleep 3
 		else 
-			echo "$i successfuly installed"
+			echo "$i successfully installed"
 			sleep 3
 		fi
 	done
@@ -52,16 +52,16 @@ function configure_software(){
 	sudo systemctl enable sshd
 	sudo systemctl start sshd
 	echo "Enabling and starting SSH service"
-        sudo systemctl status sshd
+        sudo systemctl is-active --quiet sshd && echo "the SSH service working" || echo "the SSH service not working"
 
 }
 function backup_configuration(){
 	 backup="$HOME/.backup"
-	 sudo mkdir -p "$backup"
-         sudo chmod 755 "$backup"
+	 mkdir -p "$backup"
+         chmod 755 "$backup"
          for i in ~/.vimrc ~/.wgetrc ~/.curlrc
          do
-	 if [ -f $i ]; then
+	 if [ -f "$i" ]; then
                  sudo cp "$i" "$backup/"
                  echo "backuping configuration files"
                  sleep 3
